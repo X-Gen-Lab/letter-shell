@@ -1810,13 +1810,13 @@ void shellHandler(Shell *shell, char data)
         {
             /* 对输入的字节同按键键值进行匹配 */
             if ((base[i].data.key.value & keyFilter) == shell->parser.keyValue
-                && (base[i].data.key.value & (0xFF << keyByteOffset))
-                    == (data << keyByteOffset))
+                && (base[i].data.key.value & (0xFFU << keyByteOffset))
+                    == ((unsigned int)(unsigned char)data << keyByteOffset))
             {
-                shell->parser.keyValue |= data << keyByteOffset;
+                shell->parser.keyValue |= (unsigned int)(unsigned char)data << keyByteOffset;
                 data = 0x00;
                 if (keyByteOffset == 0 
-                    || (base[i].data.key.value & (0xFF << (keyByteOffset - 8)))
+                    || (base[i].data.key.value & (0xFFU << (keyByteOffset - 8)))
                         == 0x00000000)
                 {
                     if (base[i].data.key.function)
